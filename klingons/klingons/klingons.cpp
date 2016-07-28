@@ -2,16 +2,22 @@
 // 2016, SPb, Russia.
 // Version 1
 
+// TODO improvement: Init whole galaxy at startup. All sectors.
+// TODO Remember each sector's stars and other objects.
+// TODO feature: Planets.
+// TODO feature: Star names.
+// TODO feature: Stardust.
+// TODO feature: Asteroids.
+// TODO feature: Constellations. Unique star configurations per sector or adjacent sectors.
 // TODO Long range radar radius of 3-4 squares. Detects klingons. Bases are generated at start locations known.
+// TODO rewrite: Modularize program (.h, several .cpp).
+// -------------
 // TODO WIP Release2: Global goal. Make all stats (fuel, oxygen, energy) useful.
 // TODO feature: Clingon boarding mode. Ability to capture things and be attacked in return.
-// TODO feature: Remember each sector's stars and other objects.
-// TODO feature: Constellations. Unique star configurations per sector or adjacent sectors.
-// TODO feature: Planets, star names, stardust, asteroids, text quests, prompt personalization and randomization.
+// TODO feature: Text quests, prompt personalization and randomization.
 // TODO feature: Localizations.
 // TODO feature: Galaxy jump events (drive falure).
 // TODO feature: Ship's subsystems.
-// TODO rewrite: Modularize program (.h, several .cpp).
 
 /*
 . Win32
@@ -262,6 +268,7 @@ int endgame(int clingons, bool base_destroyer) {
 	cout << "-Clingons rest: " << clingons << endl;
 	if (base_destroyer == true) {
 		cout << "-By the way, you are wanted fugitive now\n for destroying friendly base.\n";
+		cout << "-Your own base, for god's sake!\n";
 	}
 	cout << "-See ya, capt'n!\n";
 	cout << "----------------------------------------\n\n\n";
@@ -305,38 +312,7 @@ int main()
 	int warhead_old_y = 0;
 	bool base_destroyer = false;
 	bool quit = false;
-
-	// Prompts !!! This is unedited and cannot be trusted!
-	// 0 - "\n\n-We are short on warheads, need resupply!\n-What should we do?\n-"
-	// 1 - "\n\n-Warhead course?\n-"
-	// 2 - "\n\n-Warhead wanished in the star's flames!\n-Orders?\n-"
-	// 3 - "\n\n-Clingon killed!\n-What should we do now?\n-"
-	// 4 - "\n\n-Base destroyed!\n-What's next? Alderaan?\n-" 
-	// 5 - "\n\n-Lost warhead telemetry!\n-We all doomed!\n-"
-	// 6 - "\n\n-Wrong bearing, sir!\n-Your command, sir?\n-"
-	// 7 - "\n\n-Heading, capt'n?\n-"
-	// 8 - "\n\n-Can't carry the order, sir!\n-Your command, sir?\n-"
-	// 9 - "\n\n-Out of range, sir!\n-Orders?\n-"
-	// 10 - "\n\n-Star ahead!\n-Orders, sir?\n-"
-	// 11 - "\n\n-Clingon ahead!\n-Attacking, sir?\n-"
-	// 12 - "\n\n-Base ahead!\n-We can dock, sir?\n-"
-	// 13 - "\n\n-Something ahead!\n-What will be the orders, sir?\n-"
-	// 14 - "\n\n-Maneuver commenced!\n-Orders, sir?\n-"
-	// 15 - "\n\n-Your orders, capt'n?\n-"
-	// 16 - "\n\n-Got fresh ones!!\n-New orders, sir?\n-"
-	// 17 - "\n\n-Whats the move, cap?\n-"
-	// 18 - "\n\n-New heroic orders, capt'n?\n-"
-	// 19 - "\n\n-Awaiting orders, capt'n?\n-"
-	// 20 - "Out of gas, cap! Neen refill!"
-	// 21 - "\n\n-We've jumped right in the target, capt'n! Yew!\n-Scanning sector..."
-	// 22 - "-Wrong coordinates, nav officer's drunk!\n"
-	// 23 - " Gotcha!"
-	// 24 - " Success!"
-	// 25 - 
-	// 26 - 
-	// 27 - 
-	// 28 -
-	// 29 - 
+ 
 	vector<string> prompts;
 
 	int galaxy_x = 11;
