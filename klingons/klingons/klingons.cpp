@@ -1,10 +1,9 @@
-// game-03.cpp : Trekkie game by Alex Baranov.
+// klingons.cpp : Trekkie game by Alex Baranov.
 // 2016, SPb, Russia.
 // Version 1
 
-// WIP Release1: Global galaxy map.
-// Long range radar radius of 3-4 squares. Detects klingons. Bases are generated at start lokations known.
-// WIP Release2: Global goal. Make all stats (fuel, oxygen, energy) useful.
+// TODO Long range radar radius of 3-4 squares. Detects klingons. Bases are generated at start locations known.
+// TODO WIP Release2: Global goal. Make all stats (fuel, oxygen, energy) useful.
 // TODO feature: Clingon boarding mode. Ability to capture things and be attacked in return.
 // TODO feature: Remember each sector's stars and other objects.
 // TODO feature: Constellations. Unique star configurations per sector or adjacent sectors.
@@ -61,13 +60,15 @@ int ship_y = 0;
 // 3 - our ship
 // 4 - base
 // 5 - warhead
-int sector[10][10] = { 0 };
+#define SECTOR 10
+int sector[SECTOR][SECTOR] = { 0 };
 
 // Global galaxy map
 // 1 - base
 // 2 - ship
 // 3 - visited
-int galaxy[12][12] = { 0 };
+#define GALAXY 12
+int galaxy[GALAXY][GALAXY] = { 0 };
 
 int init_sector(int stars_min, int stars_max, int clingons_min, int clingon_max, bool base) {
 
@@ -76,8 +77,8 @@ int init_sector(int stars_min, int stars_max, int clingons_min, int clingon_max,
 
 	srand(time(NULL));
 
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
+	for (int i = 0; i < SECTOR; i++) {
+		for (int j = 0; j < SECTOR; j++) {
 			sector[i][j] = 0;
 		}
 	}
@@ -88,31 +89,31 @@ int init_sector(int stars_min, int stars_max, int clingons_min, int clingon_max,
 	// stars
 	for (int i = 1; i <= (rand() % (stars_max - stars_min) + stars_min); i++) {
 		do {
-			j = rand() % 10;
-			k = rand() % 10;
+			j = rand() % SECTOR;
+			k = rand() % SECTOR;
 		} while (sector[j][k] != 0);
 		sector[j][k] = 1;
 	}
 	// clingons
 	for (int i = 1; i <= (rand() % (clingon_max - clingons_min) + clingons_min); i++) {
 		do {
-			j = rand() % 10;
-			k = rand() % 10;
+			j = rand() % SECTOR;
+			k = rand() % SECTOR;
 		} while (sector[j][k] != 0);
 		sector[j][k] = 2;
 		clingons++;
 	}
 	// Our ship
 	do {
-		ship_x = rand() % 10;
-		ship_y = rand() % 10;
+		ship_x = rand() % SECTOR;
+		ship_y = rand() % SECTOR;
 	} while (sector[ship_x][ship_y] != 0);
 	sector[ship_x][ship_y] = 3;
 	// 0-1 base
 	if (base == true) {
 		do {
-			j = rand() % 10;
-			k = rand() % 10;
+			j = rand() % SECTOR;
+			k = rand() % SECTOR;
 		} while (sector[j][k] != 0);
 		sector[j][k] = 4;
 	}
@@ -129,16 +130,16 @@ int draw_statusbar(int energy, int warheads, float fuel, float oxygen) {
 	return 0;
 }
 
-int draw_galaxy(int energy, int warheads, float fuel, float oxygen, int galaxy[12][12], string prompt) {
+int draw_galaxy(int energy, int warheads, float fuel, float oxygen, int galaxy[GALAXY][GALAXY], string prompt) {
 	draw_statusbar(energy, warheads, fuel, oxygen);
 	cout << endl << "Known galaxy map:" << endl <<
 		"------------------------------------------" << endl;
 	cout << "|     0  1  2  3  4  5  6  7  8  9 10 11 |" << endl;
-	for (int i = 0; i <= 11; i++) {
+	for (int i = 0; i < GALAXY; i++) {
 		cout << "|";
 		if (i < 10) { cout << " "; }
 		cout << " 0" << i;
-		for (int j = 0; j <= 11; j++) {
+		for (int j = 0; j < GALAXY; j++) {
 			switch (galaxy[i][j]) {
 			case 1:
 				cout << " B ";
@@ -162,15 +163,15 @@ int draw_galaxy(int energy, int warheads, float fuel, float oxygen, int galaxy[1
 	return 0;
 }
 
-int draw_sector(int energy, int warheads, float fuel, float oxygen, int sector[10][10], string prompt, int mode) {
+int draw_sector(int energy, int warheads, float fuel, float oxygen, int sector[SECTOR][SECTOR], string prompt, int mode) {
 	draw_statusbar(energy, warheads, fuel, oxygen);
 	// sector map
 	cout << endl << "Near range radar screen:" << endl <<
 		"-----------------------------------" << endl;
 	cout << "|    0  1  2  3  4  5  6  7  8  9 |" << endl;
-	for (int i = 0; i <= 9; i++) {
+	for (int i = 0; i < SECTOR; i++) {
 		cout << "| 0" << i;
-		for (int j = 0; j <= 9; j++) {
+		for (int j = 0; j < SECTOR; j++) {
 			switch (sector[i][j]) {
 			case 1:
 				cout << " * ";
@@ -435,7 +436,7 @@ int main()
 						}
 						break;
 					}
-				} while ((abs(warhead_x) <= 10.0) && (abs(warhead_y) <= 10.0));
+				} while ((abs(warhead_x) <= (float)SECTOR) && (abs(warhead_y) <= (float)SECTOR));
 
 				//warhead_old_x = ship_x;
 				//warhead_old_y = ship_y;
