@@ -1,0 +1,10 @@
+*.bak
+*.log
+*.obj
+*.tlog
+*.exe
+*.iobj
+*.*db
+*.*pch
+*.ilk
+*.suo
