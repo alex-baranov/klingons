@@ -13,6 +13,7 @@
 // TODO Long range radar radius of 3-4 squares. Detects klingons. Bases are generated at start locations known.
 // TODO rewrite: Modularize program (.h, several .cpp).
 // TODO feature: Make sense with "Clingons rest" on the final screen
+
 // -------------
 // TODO WIP Release2: Global goal. Make all stats (fuel, oxygen, energy) useful.
 // TODO feature: Clingon boarding mode. Ability to capture things and be attacked in return.
